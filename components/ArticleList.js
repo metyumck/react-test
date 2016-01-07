@@ -5,13 +5,11 @@ import showArticles from '../actions/showArticles';
 import { connectToStores } from 'fluxible-addons-react';
 import { provideContext } from 'fluxible-addons-react';
 
-const ENTER_KEY = 13;
-
 class ArticleList extends React.Component {
 
     constructor (props) {
       super(props);
-      
+      this.state = {buttonText: "Load one more article"}
     }
 
     componentWillMount () {
@@ -22,13 +20,21 @@ class ArticleList extends React.Component {
 
     }
 
+    componentWillUnmount () {
+      console.log('Unmounting article list component');
+      this.context.executeAction(clearArticles);
+    }
+
     onClick (event) {
       event.preventDefault();
-
-      this.context.executeAction(showArticles, {
-        currentArticleCount: this.props.articlesCount,
-        amount: 1
-      });
+      if (!this.props.noMoreArticles) {
+        this.context.executeAction(showArticles, {
+          currentArticleCount: this.props.articlesCount,
+          amount: 1
+        });
+      } else {
+        this.setState({buttonText: "Sorry, no more articles to display"});
+      }
       
     }
 
@@ -41,7 +47,7 @@ class ArticleList extends React.Component {
         return (
             <div>
                 {this.articleItems}
-                <button onClick={this.onClick.bind(this)}>Load another article</button>
+                <button onClick={this.onClick.bind(this)}>{this.state.buttonText}</button>
             </div>
         );
     }
@@ -55,7 +61,8 @@ ArticleList.contextTypes = {
 ArticleList = provideContext(connectToStores(ArticleList, [ArticleStore], function (context, props) {
     return {
       articles: context.getStore(ArticleStore).getArticles(),
-      articlesCount: context.getStore(ArticleStore).getLastLoadedArticle()
+      articlesCount: context.getStore(ArticleStore).getLastLoadedArticle(),
+      noMoreArticles: context.getStore(ArticleStore).getNoMoreArticles()
     };
 }));
 

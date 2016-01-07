@@ -30,6 +30,7 @@ var fetchObject = {
     	console.log(params);
       
     	var _requiredArticles = []
+    	var noMoreArticles = {value: false};
     	var i;
     	//get articles according to amount required
 
@@ -38,16 +39,16 @@ var fetchObject = {
     		_requiredArticles.push(_articles[i])
     	}
 
-    	if (params.currentArticleCount >= _articles.length) {
-    		setTimeout(function () {
-	        	callback("no_more_articles", null);
-	        	return;
-	    	}, 10);
+    	if (_articles.length - params.currentArticleCount <= 1) {
+    		noMoreArticles = {value: true};
     	}
 
-    	setTimeout(function () {
-        	callback(null, JSON.parse(JSON.stringify(_requiredArticles)));
+		setTimeout(function () {
+        	callback(null, JSON.parse(JSON.stringify(_requiredArticles)), noMoreArticles);
     	}, 10);
+    	
+
+    	
          
     }
 }
