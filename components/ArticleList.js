@@ -1,7 +1,7 @@
 import React from 'react';
 import Article from './Article';
 import ArticleStore from '../stores/ArticleStore';
-import showArticles from '../actions/showArticles';
+import loadArticles from '../actions/loadArticles';
 import { connectToStores } from 'fluxible-addons-react';
 import { provideContext } from 'fluxible-addons-react';
 
@@ -13,22 +13,17 @@ class ArticleList extends React.Component {
     }
 
     componentWillMount () {
-      this.context.executeAction(showArticles, {
+      this.context.executeAction(loadArticles, {
         currentArticleCount: this.props.articlesCount,
         amount: 2
       });
 
     }
 
-    componentWillUnmount () {
-      console.log('Unmounting article list component');
-      this.context.executeAction(clearArticles);
-    }
-
     onClick (event) {
       event.preventDefault();
       if (!this.props.noMoreArticles) {
-        this.context.executeAction(showArticles, {
+        this.context.executeAction(loadArticles, {
           currentArticleCount: this.props.articlesCount,
           amount: 1
         });
