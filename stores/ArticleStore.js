@@ -11,6 +11,7 @@ class ArticleStore extends BaseStore {
     }
 
 	handleLoadArticle (payload) {
+     
         var i;
         for (i = 0; i < payload.articles.length; i++) {
             this.articles.push(payload.articles[i]);

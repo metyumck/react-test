@@ -18,7 +18,6 @@ export default {
 	    id: 4,
 	    title: "article title 4",
 	    image: "http://placehold.it/300x250&text=image 4"
-	}],
-	noMoreArticles: {value: false}
+	}]
 
 }
