@@ -21,13 +21,7 @@ let mockNavPayload = { path: '/about',
   }
 
 beforeEach(function () {
-  // storeInstance = new ApplicationStore({
-  //   waitFor: function (stores, callback) {
-  //     let mockAction = new Action(actionName, mockNavPayload);
-  //     mockAction.waitFor(stores, callback);
-      
-  //   }
-  // });
+
   storeInstance = new ApplicationStore();
 
 
@@ -46,8 +40,4 @@ describe('application store', function () {
     expect(storeInstance.pageTitle).to.equal('');
   });
 
-  it('should update page title on handlePageTitle call', function () {
-    //storeInstance.handlePageTitle(mockNavPayload);
-    //expect(storeInstance.pageTitle).to.equal('About');
-  });
 });
